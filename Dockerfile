@@ -16,10 +16,10 @@ RUN apt-get update && apt-get install -y\
     #zlib\
     #zlib-dev
 RUN apt-get install -y\  
-    postgresql\
-    postgresql-server-dev-all\ 
-    libpq-dev\ 
-    python-psycopg2\ 
+    #postgresql\
+    #postgresql-server-dev-all\ 
+    #libpq-dev\ 
+    #python-psycopg2\ 
     libsasl2-dev\ 
     libldap2-dev\ 
     libssl-dev
@@ -27,12 +27,12 @@ RUN apt-get install -y\
     python-virtualenv
 RUN apt-get install -y\
     python-dev build-essential libjpeg-dev libssl-dev libffi-dev
-RUN apt-get install -y dbus libdbus-1-dev libdbus-glib-1-dev libldap2-dev libsasl2-dev
+RUN apt-get install -y dbus libdbus-1-dev libdbus-glib-1-dev libldap2-dev libsasl2-dev && rm -rf /var/lib/apt/lists/*
 RUN set -x && \
-    git clone --recursive https://github.com/cerquide/pybossa /opt/pybossa && \
+    git clone --recursive https://github.com/cerquide/pybossa --branch my-fix-libs /opt/pybossa && \
     cd /opt/pybossa && \
     pip install -U pip setuptools && \
-    pip install -r /opt/pybossa/reqs.txt
+    pip install -e /opt/pybossa/
 RUN set -x && \
     rm -rf /opt/pybossa/.git/ && \
     addgroup pybossa  && \
